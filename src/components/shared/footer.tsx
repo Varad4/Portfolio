@@ -3,7 +3,7 @@ export default function Footer() {
     <footer className="py-8 text-center bg-card border-t">
       <div className="container mx-auto">
         <p className="text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} Prototype. All rights reserved.
+          &copy; {new Date().getFullYear()} Portfolio. All rights reserved.
         </p>
         <p className="text-xs text-muted-foreground mt-1">
           Powered by Next.js and Generative AI

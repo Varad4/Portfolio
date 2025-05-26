@@ -9,8 +9,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: 'Varad Mishra - Portfolio powered by Prototype',
-  description: "Portfolio of Varad Mishra, showcasing projects in AI, web development, and cloud technologies. Explore skills in Java, Python, React, AWS, and more. Built with Prototype.",
+  title: 'Varad Mishra - Portfolio',
+  description: "Portfolio of Varad Mishra, showcasing projects in AI, web development, and cloud technologies. Explore skills in Java, Python, React, AWS, and more. Built with Portfolio.",
 };
 
 export default function RootLayout({
