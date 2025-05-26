@@ -10,7 +10,7 @@ const initialProjects = [
     id: '1',
     title: 'AI Desktop Assistant',
     description: "Built an open-source AI desktop assistant using OpenAI's API and Python. It interacts with users human-like, providing responses and performing tasks. Source code available online for contribution and customization.",
-    imageUrl: 'https://placehold.co/600x400.png',
+    imageUrl: 'https://belwoodmusic.com/wp-content/uploads/2015/01/spotify-logo.jpg',
     imageHint: 'AI assistant interface',
     technologies: ['Python', 'OpenAI API', 'UI/UX'],
     // liveLink: '#', // Add actual links if available
