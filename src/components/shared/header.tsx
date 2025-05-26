@@ -8,7 +8,7 @@ export default function Header() {
       <div className="container mx-auto flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2" prefetch={false}>
           <Code2 className="h-8 w-8 text-primary" />
-          <span className="text-2xl font-bold text-primary">PersonaAI</span>
+          <span className="text-2xl font-bold text-primary">Prototype</span>
         </Link>
         <nav className="hidden md:flex items-center gap-4">
           <Button variant="link" asChild>
