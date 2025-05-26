@@ -1,16 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Loader2, Wand2, CheckCircle, Code, Database, Cloud, Palette, Wrench } from 'lucide-react'; // Changed Tool to Wrench
-import { handleSuggestSkills, type SuggestSkillsState } from '@/lib/actions';
-import { useToast } from '@/hooks/use-toast';
+import { Code, Database, Cloud, Palette, Wrench } from 'lucide-react';
 
 const initialSkills = [
   // Programming Languages
@@ -28,8 +20,8 @@ const initialSkills = [
   { name: 'MongoDB', category: 'Database Management', icon: <Database className="h-4 w-4 mr-1" /> },
   { name: 'Postgres', category: 'Database Management', icon: <Database className="h-4 w-4 mr-1" /> },
   // Developer Tools
-  { name: 'VS Code', category: 'Developer Tools', icon: <Wrench className="h-4 w-4 mr-1" /> }, // Changed Tool to Wrench
-  { name: 'Git', category: 'Developer Tools', icon: <Wrench className="h-4 w-4 mr-1" /> }, // Changed Tool to Wrench
+  { name: 'VS Code', category: 'Developer Tools', icon: <Wrench className="h-4 w-4 mr-1" /> },
+  { name: 'Git', category: 'Developer Tools', icon: <Wrench className="h-4 w-4 mr-1" /> },
   // Cloud Development
   { name: 'AWS', category: 'Cloud Development', icon: <Cloud className="h-4 w-4 mr-1" /> },
   { name: 'Google Cloud', category: 'Cloud Development', icon: <Cloud className="h-4 w-4 mr-1" /> },
@@ -43,53 +35,12 @@ const categoryIcons: { [key: string]: JSX.Element } = {
   'Programming Languages': <Code className="h-5 w-5 text-primary" />,
   'Software Development': <Code className="h-5 w-5 text-primary" />,
   'Database Management': <Database className="h-5 w-5 text-primary" />,
-  'Developer Tools': <Wrench className="h-5 w-5 text-primary" />, // Changed Tool to Wrench
+  'Developer Tools': <Wrench className="h-5 w-5 text-primary" />,
   'Cloud Development': <Cloud className="h-5 w-5 text-primary" />,
   'UI/UX Development': <Palette className="h-5 w-5 text-primary" />,
 };
 
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <Button type="submit" disabled={pending} className="w-full md:w-auto bg-accent hover:bg-accent/90 text-accent-foreground">
-      {pending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Wand2 className="mr-2 h-4 w-4" />}
-      Suggest Skills & Keywords
-    </Button>
-  );
-}
-
 export default function SkillsSection() {
-  const { toast } = useToast();
-  const initialState: SuggestSkillsState = { message: null, errors: null };
-  const [state, dispatch] = useFormState(handleSuggestSkills, initialState);
-  const [workExperience, setWorkExperience] = useState('');
-  const [projectDescriptions, setProjectDescriptions] = useState('');
-
-  useEffect(() => {
-    if (state.message) {
-      if (state.suggestedSkills || state.suggestedKeywords) {
-        toast({
-          title: "AI Suggestions Ready!",
-          description: state.message,
-          variant: 'default',
-        });
-      } else if (state.errors) {
-         toast({
-          title: "Oops! Something went wrong.",
-          description: state.message,
-          variant: 'destructive',
-        });
-      } else {
-         toast({
-          title: "Update",
-          description: state.message,
-          variant: 'default',
-        });
-      }
-    }
-  }, [state, toast]);
-  
   const skillCategories = Array.from(new Set(initialSkills.map(skill => skill.category)));
 
   return (
@@ -116,84 +67,6 @@ export default function SkillsSection() {
             </Card>
           ))}
         </div>
-
-        <Card className="shadow-xl mt-12 p-6 md:p-8">
-          <CardHeader className="p-0 mb-6">
-            <CardTitle className="text-2xl md:text-3xl font-bold text-accent flex items-center gap-2">
-              <Wand2 className="h-7 w-7" />
-              AI Skill & Keyword Suggester
-            </CardTitle>
-            <CardDescription className="text-md text-muted-foreground">
-              Provide your experience and project details to get AI-powered suggestions for skills and keywords.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-            <form action={dispatch} className="space-y-6">
-              <div>
-                <Label htmlFor="workExperience" className="text-lg font-medium text-foreground/90">Work Experience</Label>
-                <Textarea
-                  id="workExperience"
-                  name="workExperience"
-                  rows={6}
-                  placeholder="Describe your professional work experience (e.g., Jr Software Engineer at G JAC Solution... Cisco Internship... Rajasthan IT Day Hackathon Team Lead...) (min 50 characters)"
-                  className="mt-2 text-base"
-                  value={workExperience}
-                  onChange={(e) => setWorkExperience(e.target.value)}
-                  aria-describedby="workExperience-error"
-                />
-                {state.errors?.workExperience && (
-                  <p id="workExperience-error" className="text-sm text-destructive mt-1">{state.errors.workExperience.join(', ')}</p>
-                )}
-              </div>
-              <div>
-                <Label htmlFor="projectDescriptions" className="text-lg font-medium text-foreground/90">Project Descriptions</Label>
-                <Textarea
-                  id="projectDescriptions"
-                  name="projectDescriptions"
-                  rows={6}
-                  placeholder="Summarize your key projects (e.g., AI Desktop Assistant, Spotify Clone, Weather App, Cloud Storage System...) (min 50 characters)"
-                  className="mt-2 text-base"
-                  value={projectDescriptions}
-                  onChange={(e) => setProjectDescriptions(e.target.value)}
-                  aria-describedby="projectDescriptions-error"
-                />
-                {state.errors?.projectDescriptions && (
-                  <p id="projectDescriptions-error" className="text-sm text-destructive mt-1">{state.errors.projectDescriptions.join(', ')}</p>
-                )}
-              </div>
-              <SubmitButton />
-            </form>
-            
-            {(state.suggestedSkills || state.suggestedKeywords) && (
-              <Alert className="mt-8 bg-primary/5 border-primary/20">
-                <CheckCircle className="h-5 w-5 text-primary" />
-                <AlertTitle className="text-lg font-semibold text-primary">AI Generated Suggestions:</AlertTitle>
-                <AlertDescription className="text-md text-foreground/80">
-                  {state.suggestedSkills && state.suggestedSkills.length > 0 && (
-                    <div className="mt-4">
-                      <h4 className="font-semibold text-foreground/90 mb-2">Suggested Skills:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {state.suggestedSkills.map((skill, index) => (
-                          <Badge key={`skill-${index}`} variant="default" className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm">{skill}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  {state.suggestedKeywords && state.suggestedKeywords.length > 0 && (
-                    <div className="mt-4">
-                      <h4 className="font-semibold text-foreground/90 mb-2">Suggested Keywords:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {state.suggestedKeywords.map((keyword, index) => (
-                          <Badge key={`keyword-${index}`} variant="outline" className="text-sm">{keyword}</Badge>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </AlertDescription>
-              </Alert>
-            )}
-          </CardContent>
-        </Card>
       </div>
     </section>
   );
