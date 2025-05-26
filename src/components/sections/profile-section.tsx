@@ -6,7 +6,7 @@ const userProfile = {
   name: 'Varad Mishra',
   title: 'Aspiring Software Engineer | B.Tech Computer Science Student',
   bio: "A motivated B.Tech Computer Science student specializing in Internet Of Things, Cyber Security, and Blockchain at Lakshmi Narain College Of Technology, Bhopal (2021-2025). Experienced in developing diverse projects including AI assistants, music streaming clones, weather apps, and cloud storage systems. Proven leadership as Team Leader at Rajasthan IT Day Hackathon and coordination skills from managing large-scale events like the 6th Engineering Olympics. Actively seeking opportunities to apply and expand technical skills in a dynamic environment.",
-  imageUrl: 'https://placehold.co/400x400.png',
+  imageUrl: 'https://www.shutterstock.com/image-photo/software-engineer-working-on-new-600nw-2240840089.jpg',
   imageHint: 'professional portrait',
   email: 'varadmishra0411@gmail.com',
   phone: '+91 9236183883',
