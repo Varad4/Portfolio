@@ -1,8 +1,8 @@
 
 'use client';
 
-import { useEffect, useActionState } from 'react'; // Correct: useActionState from 'react'
-import { useFormStatus } from 'react-dom'; // Correct: useFormStatus from 'react-dom'
+import React, { useEffect } from 'react'; // Import React itself
+import { useFormStatus } from 'react-dom'; // This import is correct for useFormStatus
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -25,21 +25,19 @@ function SubmitButton() {
 export default function ContactSection() {
   const { toast } = useToast();
   const initialState: ContactFormState = { message: null, errors: null, success: false };
-  const [state, dispatch, isPending] = useActionState(handleContactForm, initialState);
+  // Use React.useActionState explicitly
+  const [state, dispatch, isPending] = React.useActionState(handleContactForm, initialState);
 
-
-  useEffect(() => {
+  // Use React.useEffect explicitly
+  React.useEffect(() => {
     if (state.message) {
       toast({
         title: state.success ? "Message Sent!" : "Error",
         description: state.message,
         variant: state.success ? 'default' : 'destructive',
       });
-      if (state.success) {
-        // Optionally reset form fields here if using controlled components
-        // For uncontrolled with server actions, Next.js might re-render and clear them
-        // or you might need to manage reset via a key on the form or ref.
-      }
+      // Removed form reset logic here as it can be problematic with server actions
+      // and might be better handled by keying the form or using refs if truly necessary.
     }
   }, [state, toast]);
 
@@ -71,6 +69,7 @@ export default function ContactSection() {
                     placeholder="Your Name" 
                     className="mt-2 text-base" 
                     aria-describedby="name-error"
+                    required
                   />
                   {state.errors?.name && (
                     <p id="name-error" className="text-sm text-destructive mt-1">{state.errors.name.join(', ')}</p>
@@ -85,6 +84,7 @@ export default function ContactSection() {
                     placeholder="your.email@example.com" 
                     className="mt-2 text-base"
                     aria-describedby="email-error"
+                    required
                   />
                   {state.errors?.email && (
                     <p id="email-error" className="text-sm text-destructive mt-1">{state.errors.email.join(', ')}</p>
@@ -99,6 +99,7 @@ export default function ContactSection() {
                     placeholder="Your message here..." 
                     className="mt-2 text-base" 
                     aria-describedby="message-error"
+                    required
                   />
                   {state.errors?.message && (
                     <p id="message-error" className="text-sm text-destructive mt-1">{state.errors.message.join(', ')}</p>
