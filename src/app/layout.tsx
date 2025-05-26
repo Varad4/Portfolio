@@ -9,8 +9,8 @@ const geistSans = Geist({
 });
 
 export const metadata: Metadata = {
-  title: 'PersonaAI - Your AI-Powered Portfolio',
-  description: 'Create and showcase your professional portfolio with AI assistance.',
+  title: 'Varad Mishra - Portfolio',
+  description: "Portfolio of Varad Mishra, showcasing projects in AI, web development, and cloud technologies. Explore skills in Java, Python, React, AWS, and more.",
 };
 
 export default function RootLayout({

@@ -8,27 +8,46 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Loader2, Wand2, CheckCircle } from 'lucide-react';
+import { Loader2, Wand2, CheckCircle, Code, Database, Cloud, Palette, Wrench } from 'lucide-react'; // Changed Tool to Wrench
 import { handleSuggestSkills, type SuggestSkillsState } from '@/lib/actions';
 import { useToast } from '@/hooks/use-toast';
 
 const initialSkills = [
-  { name: 'JavaScript (ES6+)', category: 'Frontend' },
-  { name: 'TypeScript', category: 'Frontend' },
-  { name: 'React & Next.js', category: 'Frontend' },
-  { name: 'HTML5 & CSS3', category: 'Frontend' },
-  { name: 'Tailwind CSS', category: 'Frontend' },
-  { name: 'Node.js & Express.js', category: 'Backend' },
-  { name: 'Python (Flask/Django)', category: 'Backend' },
-  { name: 'RESTful APIs & GraphQL', category: 'Backend' },
-  { name: 'PostgreSQL & MongoDB', category: 'Database' },
-  { name: 'AWS & Google Cloud', category: 'Cloud' },
-  { name: 'Docker & Kubernetes', category: 'DevOps' },
-  { name: 'CI/CD Pipelines', category: 'DevOps' },
-  { name: 'Git & GitHub', category: 'Tools' },
-  { name: 'Agile Methodologies', category: 'Other' },
-  { name: 'Machine Learning Basics', category: 'AI' },
+  // Programming Languages
+  { name: 'Java', category: 'Programming Languages', icon: <Code className="h-4 w-4 mr-1" /> },
+  { name: 'C++', category: 'Programming Languages', icon: <Code className="h-4 w-4 mr-1" /> },
+  { name: 'Python', category: 'Programming Languages', icon: <Code className="h-4 w-4 mr-1" /> },
+  { name: 'JavaScript', category: 'Programming Languages', icon: <Code className="h-4 w-4 mr-1" /> },
+  // Software Development (Web)
+  { name: 'HTML', category: 'Software Development', icon: <Code className="h-4 w-4 mr-1" /> },
+  { name: 'CSS', category: 'Software Development', icon: <Code className="h-4 w-4 mr-1" /> },
+  { name: 'Spring MVC', category: 'Software Development', icon: <Code className="h-4 w-4 mr-1" /> },
+  // Database Management
+  { name: 'SQL', category: 'Database Management', icon: <Database className="h-4 w-4 mr-1" /> },
+  { name: 'MySQL', category: 'Database Management', icon: <Database className="h-4 w-4 mr-1" /> },
+  { name: 'MongoDB', category: 'Database Management', icon: <Database className="h-4 w-4 mr-1" /> },
+  { name: 'Postgres', category: 'Database Management', icon: <Database className="h-4 w-4 mr-1" /> },
+  // Developer Tools
+  { name: 'VS Code', category: 'Developer Tools', icon: <Wrench className="h-4 w-4 mr-1" /> }, // Changed Tool to Wrench
+  { name: 'Git', category: 'Developer Tools', icon: <Wrench className="h-4 w-4 mr-1" /> }, // Changed Tool to Wrench
+  // Cloud Development
+  { name: 'AWS', category: 'Cloud Development', icon: <Cloud className="h-4 w-4 mr-1" /> },
+  { name: 'Google Cloud', category: 'Cloud Development', icon: <Cloud className="h-4 w-4 mr-1" /> },
+  // UI/UX Development
+  { name: 'Figma', category: 'UI/UX Development', icon: <Palette className="h-4 w-4 mr-1" /> },
+  { name: 'WordPress', category: 'UI/UX Development', icon: <Palette className="h-4 w-4 mr-1" /> },
+  { name: 'Canva', category: 'UI/UX Development', icon: <Palette className="h-4 w-4 mr-1" /> },
 ];
+
+const categoryIcons: { [key: string]: JSX.Element } = {
+  'Programming Languages': <Code className="h-5 w-5 text-primary" />,
+  'Software Development': <Code className="h-5 w-5 text-primary" />,
+  'Database Management': <Database className="h-5 w-5 text-primary" />,
+  'Developer Tools': <Wrench className="h-5 w-5 text-primary" />, // Changed Tool to Wrench
+  'Cloud Development': <Cloud className="h-5 w-5 text-primary" />,
+  'UI/UX Development': <Palette className="h-5 w-5 text-primary" />,
+};
+
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -81,13 +100,16 @@ export default function SkillsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {skillCategories.map(category => (
             <Card key={category} className="shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <CardHeader>
+              <CardHeader className="flex flex-row items-center space-x-2">
+                {categoryIcons[category] || <Code className="h-5 w-5 text-primary" />}
                 <CardTitle className="text-xl text-primary">{category}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-wrap gap-2">
                   {initialSkills.filter(skill => skill.category === category).map((skill) => (
-                    <Badge key={skill.name} variant="secondary" className="text-sm px-3 py-1">{skill.name}</Badge>
+                    <Badge key={skill.name} variant="secondary" className="text-sm px-3 py-1 flex items-center">
+                      {skill.icon} {skill.name}
+                    </Badge>
                   ))}
                 </div>
               </CardContent>
@@ -113,7 +135,7 @@ export default function SkillsSection() {
                   id="workExperience"
                   name="workExperience"
                   rows={6}
-                  placeholder="Describe your professional work experience (min 50 characters)..."
+                  placeholder="Describe your professional work experience (e.g., Jr Software Engineer at G JAC Solution... Cisco Internship... Rajasthan IT Day Hackathon Team Lead...) (min 50 characters)"
                   className="mt-2 text-base"
                   value={workExperience}
                   onChange={(e) => setWorkExperience(e.target.value)}
@@ -129,7 +151,7 @@ export default function SkillsSection() {
                   id="projectDescriptions"
                   name="projectDescriptions"
                   rows={6}
-                  placeholder="Summarize your key projects (min 50 characters)..."
+                  placeholder="Summarize your key projects (e.g., AI Desktop Assistant, Spotify Clone, Weather App, Cloud Storage System...) (min 50 characters)"
                   className="mt-2 text-base"
                   value={projectDescriptions}
                   onChange={(e) => setProjectDescriptions(e.target.value)}

@@ -1,16 +1,19 @@
 import Image from 'next/image';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Briefcase, Mail, MapPin, UserCircle } from 'lucide-react';
+import { Briefcase, Mail, MapPin, UserCircle, Phone, Linkedin, Github } from 'lucide-react';
 
 const userProfile = {
-  name: 'Alex Johnson',
-  title: 'Senior Software Engineer & AI Enthusiast',
-  bio: "Passionate about building innovative solutions that leverage cutting-edge technology. With over 8 years of experience in software development, I specialize in full-stack web applications, cloud computing, and machine learning. I'm always eager to learn new things and tackle challenging problems. My goal is to create impactful products that make a difference.",
+  name: 'Varad Mishra',
+  title: 'Aspiring Software Engineer | B.Tech Computer Science Student',
+  bio: "A motivated B.Tech Computer Science student specializing in Internet Of Things, Cyber Security, and Blockchain at Lakshmi Narain College Of Technology, Bhopal (2021-2025). Experienced in developing diverse projects including AI assistants, music streaming clones, weather apps, and cloud storage systems. Proven leadership as Team Leader at Rajasthan IT Day Hackathon and coordination skills from managing large-scale events like the 6th Engineering Olympics. Actively seeking opportunities to apply and expand technical skills in a dynamic environment.",
   imageUrl: 'https://placehold.co/300x300.png',
   imageHint: 'professional portrait',
-  email: 'alex.johnson@example.com',
-  location: 'San Francisco, CA',
-  skills: ['React', 'Node.js', 'Python', 'AWS', 'Docker', 'Kubernetes', 'TensorFlow', 'Next.js'],
+  email: 'varadmishra0411@gmail.com',
+  phone: '+91 9236183883',
+  location: 'Jhansi, UP',
+  linkedin: 'https://www.linkedin.com/in/varadmishra/', // Placeholder, replace with actual link if available
+  github: 'https://github.com/varadmishra', // Placeholder, replace with actual link if available
+  skills: ['Java', 'C++', 'Python', 'JavaScript', 'HTML', 'CSS', 'Spring MVC', 'SQL', 'MySQL', 'MongoDB', 'Postgres', 'AWS', 'Google Cloud', 'Figma', 'WordPress', 'Canva'],
 };
 
 export default function ProfileSection() {
@@ -48,22 +51,39 @@ export default function ProfileSection() {
                 <div className="space-y-3 text-foreground/80">
                   <div className="flex items-center gap-3">
                     <Mail className="h-5 w-5 text-primary" />
-                    <span>{userProfile.email}</span>
+                    <a href={`mailto:${userProfile.email}`} className="hover:underline">{userProfile.email}</a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Phone className="h-5 w-5 text-primary" />
+                    <span>{userProfile.phone}</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="h-5 w-5 text-primary" />
                     <span>{userProfile.location}</span>
                   </div>
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-center gap-3">
+                    <Linkedin className="h-5 w-5 text-primary" />
+                    <a href={userProfile.linkedin} target="_blank" rel="noopener noreferrer" className="hover:underline">LinkedIn</a>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Github className="h-5 w-5 text-primary" />
+                    <a href={userProfile.github} target="_blank" rel="noopener noreferrer" className="hover:underline">GitHub</a>
+                  </div>
+                  <div className="flex items-start gap-3 pt-3">
                     <Briefcase className="h-5 w-5 text-primary mt-1" />
                     <div>
                       <h4 className="font-semibold text-foreground/90">Key Skills:</h4>
                       <div className="flex flex-wrap gap-2 mt-1">
-                        {userProfile.skills.map((skill) => (
+                        {userProfile.skills.slice(0, 7).map((skill) => ( // Show a subset of skills
                           <span key={skill} className="px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded-full">
                             {skill}
                           </span>
                         ))}
+                         {userProfile.skills.length > 7 && (
+                           <span className="px-3 py-1 text-sm bg-secondary text-secondary-foreground rounded-full">
+                            + {userProfile.skills.length - 7} more
+                          </span>
+                         )}
                       </div>
                     </div>
                   </div>
